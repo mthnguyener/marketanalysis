@@ -55,3 +55,37 @@ tesla.full <- tesla %>%
 
 #Write to CSV
 write.csv(tesla.full, file = "tesla.full.csv")
+
+#Read Data
+setwd("/cloud/project/marketanalysis/Data")
+tesla.full <- read.csv("tesla.full.csv", header=T, na.strings="?") %>%
+  select(-X1) %>%
+  mutate(t = 1:nrow(tesla.full)) %>%
+  select(t, everything())
+
+tesla.full <- as.data.frame(tesla.full)
+
+#Lag Open
+tesla.full <- slide(tesla.full, Var="open", NewVar="open.L1", slideBy = -1)
+tesla.full <- slide(tesla.full, Var="open", NewVar="open.L2", slideBy = -2)
+tesla.full <- slide(tesla.full, Var="open", NewVar="open.L3", slideBy = -3)
+tesla.full <- slide(tesla.full, Var="open", NewVar="open.L4", slideBy = -4)
+
+#Lag High
+tesla.full <- slide(tesla.full, Var="high", NewVar="high.L1", slideBy = -1)
+tesla.full <- slide(tesla.full, Var="high", NewVar="high.L2", slideBy = -2)
+tesla.full <- slide(tesla.full, Var="high", NewVar="high.L3", slideBy = -3)
+tesla.full <- slide(tesla.full, Var="high", NewVar="high.L4", slideBy = -4)
+
+#Lag Low
+tesla.full <- slide(tesla.full, Var="low", NewVar="low.L1", slideBy = -1)
+tesla.full <- slide(tesla.full, Var="low", NewVar="low.L2", slideBy = -2)
+tesla.full <- slide(tesla.full, Var="low", NewVar="low.L3", slideBy = -3)
+tesla.full <- slide(tesla.full, Var="low", NewVar="low.L4", slideBy = -4)
+
+#Lag Close
+tesla.full <- slide(tesla.full, Var="close", NewVar="close.L1", slideBy = -1)
+tesla.full <- slide(tesla.full, Var="close", NewVar="close.L2", slideBy = -2)
+tesla.full <- slide(tesla.full, Var="close", NewVar="close.L3", slideBy = -3)
+tesla.full <- slide(tesla.full, Var="close", NewVar="close.L4", slideBy = -4)
+
